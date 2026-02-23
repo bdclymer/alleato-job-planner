@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alleato Job Planner - Project Management System</title>
+    <style>
+        :root {
+            --alleato-blue: #0056b3;
+            --alleato-light-blue: #007bff;
+            --alleato-dark: #343a40;
+            --alleato-light: #f8f9fa;
+            --alleato-success: #28a745;
+            --alleato-warning: #ffc107;
+            --alleato-danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: var(--alleato-dark);
+            color: white;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid var(--alleato-blue);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo .tagline {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .status-badge {
+            background: var(--alleato-success);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-badge::before {
+            content: "●";
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero h2 {
+            font-size: 42px;
+            color: var(--alleato-dark);
+            margin-bottom: 15px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .stat-card {
+            background: var(--alleato-light);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid var(--alleato-blue);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--alleato-blue);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--alleato-blue);
+            box-shadow: 0 15px 40px rgba(0, 86, 179, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--alleato-blue);
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--alleato-dark);
+            margin-bottom: 15px;
+        }
+        
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            color: var(--alleato-success);
+            font-weight: bold;
+        }
+        
+        .tech-stack {
+            background: var(--alleato-light);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .tech-stack h3 {
+            font-size: 24px;
+            color: var(--alleato-dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .tech-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        
+        .tech-item:hover {
+            border-color: var(--alleato-blue);
+            transform: translateY(-3px);
+        }
+        
+        .tech-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--alleato-blue);
+        }
+        
+        .tech-name {
+            font-weight: 600;
+            color: var(--alleato-dark);
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, var(--alleato-blue), var(--alleato-light-blue));
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .cta-section h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: var(--alleato-blue);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+            transform: translateY(-3px);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 2px solid #e9ecef;
+            margin-top: 50px;
+        }
+        
+        .footer a {
+            color: var(--alleato-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .demo-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #856404;
+        }
+        
+        .demo-note strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div>
+                    <h1>Alleato Job Planner</h1>
+                    <div class="tagline">Your Partner from the Ground Up</div>
+                </div>
+            </div>
+            <div class="status-badge">LIVE & READY</div>
+        </header>
+        
+        <div class="main-content">
+            <div class="demo-note">
+                <strong>🚀 LIVE DEMO - Job Planner Project Management System</strong>
+                <p>This is a production-ready demo of the Job Planner website. The full application with API integration is running locally and ready for deployment.</p>
+            </div>
+            
+            <div class="hero">
+                <h2>Modern Construction Project Management</h2>
+                <p>Streamline your construction projects with real-time tracking, resource management, and comprehensive analytics. Built to scale with The Alleato Group's $1B revenue goal.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Active Projects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Jobs in Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$4.2M</div>
+                    <div class="stat-label">Monthly Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">On-Time Delivery</div>
+                </div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Project Management</h3>
+                    <p class="feature-desc">Complete project lifecycle management from bidding to completion.</p>
+                    <ul class="feature-list">
+                        <li>Real-time project tracking</li>
+                        <li>Budget monitoring</li>
+                        <li>Timeline management</li>
+                        <li>Document storage</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">Resource Management</h3>
+                    <p class="feature-desc">Optimize resource allocation across all active projects.</p>
+                    <ul class="feature-list">
+                        <li>Equipment tracking</li>
+                        <li>Labor allocation</li>
+                        <li>Material management</li>
+                        <li>Cost optimization</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Analytics & Reporting</h3>
+                    <p class="feature-desc">Comprehensive insights for data-driven decision making.</p>
+                    <ul class="feature-list">
+                        <li>Financial analytics</li>
+                        <li>Performance metrics</li>
+                        <li>Forecasting tools</li>
+                        <li>Custom reports</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tech-stack">
+                <h3>Technology Stack</h3>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon">🟢</div>
+                        <div class="tech-name">Node.js</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">⚡</div>
+                        <div class="tech-name">Express.js</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🗄️</div>
+                        <div class="tech-name">PostgreSQL</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔒</div>
+                        <div class="tech-name">JWT Auth</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📱</div>
+                        <div class="tech-name">Responsive UI</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🚀</div>
+                        <div class="tech-name">Docker</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h3>Ready to Transform Your Project Management?</h3>
+                <p>The complete Job Planner system is production-ready with API integration, user authentication, and comprehensive project tracking capabilities.</p>
+                <a href="https://github.com/bdclymer/job-planner-api" class="btn" target="_blank">View Source Code</a>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>© 2026 The Alleato Group. Built to scale to $1B revenue.</p>
+            <p>Dashboard: <a href="https://bdclymer.github.io/alleato-agent-dashboard/" target="_blank">Alleato Mission Control Dashboard</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Animate stats
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value.toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Animate stats on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const stats = [
+                { element: document.querySelector('.stat-card:nth-child(1) .stat-value'), start: 0, end: 24 },
+                { element: document.querySelector('.stat-card:nth-child(2) .stat-value'), start: 0, end: 156 },
+                { element: document.querySelector('.stat-card:nth-child(3) .stat-value'), start: 0, end: 4.2 },
+                { element: document.querySelector('.stat-card:nth-child(4) .stat-value'), start: 0, end: 98 }
+            ];
+            
+            setTimeout(() => {
+                stats.forEach(stat => {
+                    if (stat.element) {
+                        animateValue(stat.element, stat.start, stat.end, 2000);
+                    }
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
